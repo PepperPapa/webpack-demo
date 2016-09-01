@@ -64,5 +64,28 @@
     2. 命令行运行webpack-dev-server命令后，打开[http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/),页面应显示"welcome to my app"信息，修改app.js的内容保存后可以看到页面会自动刷新，但是页面顶部会有一个显示"app ready"的状态栏。
     > webpack-dev-server
   
-    3. 去掉"app ready"状态栏，有两种方法，第一种方法是直接打开[http://localhost:8080/](http://localhost:8080/)同样可以显示页面信息，但是不能自动刷新；第二种方法是命令行运行webpack-dev-server --inline，然后打开[http://localhost:8080/](http://localhost:8080/)，这种方式不仅可以去掉状态栏，同时支持自动刷新。
+    3. 去掉"app ready"状态栏，有两种方法，第一种方法是直接打开[http://localhost:8080/](http://localhost:8080/)同样可以显示页面信息，但是不能自动刷新；第二种方法是命令行运行webpack-dev-server --inline，然后打开[http://localhost:8080/](http://localhost:8080/)，这种方式不仅可以去掉状态栏，同时支持自动
 
+5. 构建多个文件(multiple-files/):
+   1. requiring files
+   增加logger.js文件，代码如下:
+   > console.log('logger.js is now loaded...');
+   
+   在app.js中首行添加如下语句:
+   > require('./logger');
+   
+   终端运行webpack-dev-server命令，打开[http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/)发现浏览器控制台打印了"logger.js is now loaded..."信息。
+   
+   2. 配置文件中增加入口文件
+   修改webpack.config.js:
+   > module.exports = {
+	   entry: **["./app.js", "./global.js"]**,
+	   output: {
+		 filename: "bundle.js"
+	   },
+	   watch: true
+     };
+
+   终端运行webpack-dev-server命令，打开[http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/)发现浏览器控制台打印了"global.js is now loaded..."信息。
+   
+   
