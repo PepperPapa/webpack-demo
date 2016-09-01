@@ -21,4 +21,8 @@
   
   终端下运行命令:  
   > webpack ./app.js bundle.js  
+  
+  浏览器打开index.html文件，页面应显示"welcome to my app"信息
+
+
 
