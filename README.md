@@ -42,6 +42,7 @@
 4. webpack及配置文件扩展(expand-function/)：
   ### watchmode:
   使用watchmode可以监控文件变化，一旦文件发生改变可以实现自动打包，使用watchmode的方式有两种
+  
   1. 命令行方式
   > webpack --watch
   
@@ -54,13 +55,14 @@
 	 **watch: true**
     }
 
-  ### webpack dev server: 
-  webpack dev server是一个web server，借用了watchmode，支持热加载，可以实时监控文件变化并刷新页面，主要用于开发环境, 该server会阻止生成bundle.js文件到磁盘，全部在内存中运行以提高性能，如果需要生成bundle.js到磁盘还需要运行webpack命令。
-  1. 全局安装webpack dev server
-  > npm install webpack-dev-server -g
+   ### webpack dev server: 
+   webpack dev server是一个web server，借用了watchmode，支持热加载，可以实时监控文件变化并刷新页面，主要用于开发环境, 该server会阻止生成bundle.js文件到磁盘，全部在内存中运行以提高性能，如果需要生成bundle.js到磁盘还需要运行webpack命令。
+   
+   1. 全局安装webpack dev server
+   > npm install webpack-dev-server -g
   
-  2. 命令行运行webpack-dev-server命令后，打开[http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/),页面应显示"welcome to my app"信息，修改app.js的内容保存后可以看到页面会自动刷新，但是页面顶部会有一个显示"app ready"的状态栏。
-  > webpack-dev-server
+    2. 命令行运行webpack-dev-server命令后，打开[http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/),页面应显示"welcome to my app"信息，修改app.js的内容保存后可以看到页面会自动刷新，但是页面顶部会有一个显示"app ready"的状态栏。
+    > webpack-dev-server
   
-  3. 去掉"app ready"状态栏，有两种方法，第一种方法是直接打开[http://localhost:8080/](http://localhost:8080/)同样可以显示页面信息，但是不能自动刷新；第二种方法是命令行运行webpack-dev-server --inline，然后打开[http://localhost:8080/](http://localhost:8080/)，这种方式不仅可以去掉状态栏，同时支持自动刷新。
+    3. 去掉"app ready"状态栏，有两种方法，第一种方法是直接打开[http://localhost:8080/](http://localhost:8080/)同样可以显示页面信息，但是不能自动刷新；第二种方法是命令行运行webpack-dev-server --inline，然后打开[http://localhost:8080/](http://localhost:8080/)，这种方式不仅可以去掉状态栏，同时支持自动刷新。
 
