@@ -1,5 +1,7 @@
 # webpack demo
-> 学习资料来自[Beginner’s guide to Webpack](https://medium.com/@dabit3/beginner-s-guide-to-webpack-b1f1a3638460#.u1rq5y79x)，demo的组织方式是每个文件夹为一个完整的小练习，对应文件夹作为相应练习的根目录
+> 学习资料来自[Beginner’s guide to Webpack](https://medium.com/@dabit3/beginner-s-guide-to-webpack-b1f1a3638460#.u1rq5y79x)
+> * demo的组织方式是每个文件夹为一个完整的小练习，对应文件夹作为相应练习的根目录
+> * 原文作者的文章写得非常好，相信按照步骤实践后webpack就不会感觉模糊不清了。
 
 ## 1. 全局安装webpack:   
   > npm install webpack -g
@@ -193,3 +195,91 @@ module.exports = {
 > jshint results in errors   
 > document.write can be a form of eval. @ line 3 char 1   
 >    document.write('welcome to my app');
+
+### 使用npm start命令
+package.json配置文件中有一个scripts key值，删除默认值，添加如下配置：
+```
+"scripts": {
+  "start": "webpack-dev-server"
+},
+```
+终端下执行npm start命令即可执行webpack-dev-server指令。
+
+## 7. 生产和开发构建方式
+1. webpack命令可以附带参数用于生产环境的构建
+> webpack -p
+
+使用以上名称生成的bundle.js是经过压缩的代码
+2. 区分配置文件用于生产和开发环境
+  * 安装strip-loader模块
+  > npm install strip-loader --save-dev
+
+  * 创建webpack-production.config.js文件，代码如下：
+  ```
+  var devConfig = require('./webpack.config.js');
+  var stripLoader = {
+   test: [/\.js$/, /\.es6$/],
+   exclude: /node_modules/,
+   loader: WebpackStripLoader.loader('console.log')
+  }
+  devConfig.module.loaders.push(stripLoader);
+  module.exports = devConfig;
+  ```
+  * 终端下运行如下命令，生成的bundle.js是已压缩的，而且查找不到console.log语句。
+  strip-loader用于去除代码中的任意函数，接受任意多个参数。
+  > webpack --config webpack-production.config.js -p
+
+## 8. webpack用于实现react(react/):
+现在我们已经配置了webpack，接下来使用react，首先安装react-dom模块（提示：要继承step7
+已安装的模块）
+> npm install react react-dom --save
+
+创建hello.js,代码如下:
+```
+import React from "react";
+export default React.createClass({
+ render: function() {
+   return (
+     <div>
+         Hello, {this.props.name}!
+     </div>
+   );
+ },
+});
+```
+打开app.js，替换为如下代码:
+```
+import React from "react";
+import ReactDOM from "react-dom";
+import Hello from "./hello";
+ReactDOM.render(
+  <Hello name="World" />,
+  document.body
+);
+```
+打开webpack.config.js, 修改loaders的test key值为数组形式，完整代码如下:
+```
+module.exports = {
+  entry: ["./app.js"],
+  output: {
+    filename: "bundle.js"
+  },
+  module: {
+    loaders: [
+      {
+      	test: [/\.js$/, /\.es6$/],
+      	exclude: 'node_modules',
+      	loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015']
+        }
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['', '.js', '.es6']
+  },
+};
+```
+运行webpack命令, 打开index.html文件页面会显示"Hello, World!".
+> TODO: zx 运行webpack-dev-server会报错，待解决。
